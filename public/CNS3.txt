@@ -1,0 +1,44 @@
+Theory   The Hill Cipher is a classical polygraphic substitution cipher based on
+linear algebra. It uses matrix multiplication to encrypt blocks of plaintext
+letters. In this cipher, each letter of the alphabet is represented by a
+numerical value (A = 0, B = 1, …, Z = 25). The plaintext is divided into blocks
+of fixed size, and each block is treated as a vector. A square key matrix of the
+same order is used to encrypt the plaintext vector by multiplying it with the
+key matrix and taking the result modulo 26.  For decryption, the inverse of the
+key matrix modulo 26 is required. Hence, the key matrix must be invertible, and
+its determinant should be relatively prime to 26. The Hill Cipher provides
+better security than simple substitution ciphers because it encrypts multiple
+characters at once, making frequency analysis more difficult. However, it is
+vulnerable to known-plaintext attacks and is mainly used for educational
+purposes in cryptography.
+
+
+public class HillCipher {
+
+    static int[][] key = { {3, 3}, {2, 5} }; // Key matrix
+
+    static String encrypt(String text) {
+        text = text.toUpperCase();
+        StringBuilder cipher = new StringBuilder();
+
+        for (int i = 0; i < text.length(); i += 2) {
+            int[] vector = new int[2];
+            vector[0] = text.charAt(i) - 'A';
+            vector[1] = text.charAt(i + 1) - 'A';
+
+            int c1 = (key[0][0] * vector[0] + key[0][1] * vector[1]) % 26;
+            int c2 = (key[1][0] * vector[0] + key[1][1] * vector[1]) % 26;
+
+            cipher.append((char) (c1 + 'A'));
+            cipher.append((char) (c2 + 'A'));
+        }
+        return cipher.toString();
+    }
+
+    public static void main(String[] args) {
+        String plaintext = "HI";
+        System.out.println("Encrypted Text: " + encrypt(plaintext));
+    }
+}
+
+

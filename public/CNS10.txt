@@ -1,0 +1,38 @@
+Theory  
+
+The Secure Hash Algorithm (SHA) is a cryptographic hash function used to
+ensure data integrity. Unlike encryption algorithms, SHA does not use keys and
+is a one-way function, meaning the original message cannot be recovered from the
+hash value. SHA takes an input message of any length and produces a fixed-length
+hash value. Common versions include SHA-1, SHA-256, and SHA-512, with SHA-256
+being widely used due to its higher security.  In SHA, even a small change in
+the input message results in a completely different hash value, which makes it
+effective for detecting data tampering. SHA is commonly used in password
+storage, digital signatures, message authentication, and secure communication
+protocols. When combined with encryption or digital signatures, SHA ensures that
+the data has not been altered during transmission. Because of its reliability
+and efficiency, SHA plays a crucial role in modern cryptographic systems.
+
+
+import java.security.MessageDigest;
+import java.util.Scanner;
+
+public class SHAExample {
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter message: ");
+        String message = sc.nextLine();
+
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hash = md.digest(message.getBytes());
+
+        System.out.print("SHA-256 Hash: ");
+        for (byte b : hash) {
+            System.out.print(String.format("%02x", b));
+        }
+
+        sc.close();
+    }
+}

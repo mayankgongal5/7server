@@ -1,0 +1,75 @@
+Theory  
+
+The RSA algorithm is a widely used asymmetric key cryptographic
+technique that provides secure data transmission using two different keys: a
+public key and a private key. It is based on the mathematical difficulty of
+factoring large prime numbers. In RSA, two large prime numbers are selected and
+multiplied to form a modulus. From these primes, public and private keys are
+generated using Euler’s Totient function.  The public key is used for encryption
+and can be shared openly, while the private key is kept secret and is used for
+decryption. RSA ensures confidentiality, authentication, and non-repudiation,
+making it suitable for secure key exchange, digital signatures, and secure
+communication protocols such as SSL/TLS. Although RSA is computationally slower
+than symmetric algorithms, it is highly secure when large key sizes are used.
+Therefore, RSA is commonly used to exchange symmetric keys rather than encrypt
+large amounts of data directly.
+
+public class RSAExample {
+
+    public static void main(String[] args) {
+
+    
+
+        // Two prime numbers
+        
+        int p = 5;
+        
+        int q = 7;
+
+        int n = p * q;
+        int phi = (p - 1) * (q - 1);
+
+        int e = 2;
+        while (e < phi) {
+            if (gcd(e, phi) == 1)
+                break;
+            e++;
+        }
+
+        int d = 1;
+        while ((d * e) % phi != 1)
+            d++;
+
+        System.out.println("\nPublic Key (e, n): (" + e + ", " + n + ")");
+        System.out.println("Private Key (d, n): (" + d + ", " + n + ")");
+
+        System.out.print("\nEnter message (number): ");
+        int msg = 750;
+
+        int cipher = power(msg, e, n);
+        System.out.println("Encrypted Message: " + cipher);
+
+        int plain = power(cipher, d, n);
+        System.out.println("Decrypted Message: " + plain);
+
+    }
+
+    static int gcd(int a, int b) {
+        if (b == 0)
+            return a;
+        return gcd(b, a % b);
+    }
+
+    static int power(int base, int exp, int mod) {
+        int result = 1;
+        base = base % mod;
+
+        while (exp > 0) {
+            if (exp % 2 == 1)
+                result = (result * base) % mod;
+            exp /= 2;
+            base = (base * base) % mod;
+        }
+        return result;
+    }
+}

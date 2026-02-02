@@ -1,0 +1,56 @@
+Theory  The Playfair Cipher is a classical symmetric key cryptographic technique
+that encrypts pairs of letters (digraphs) instead of single letters, making it
+more secure than simple substitution ciphers. It uses a 5×5 matrix constructed
+from a keyword, where the letters I and J are treated as the same to fit 25
+characters. During encryption, the plaintext is divided into pairs of letters.
+If both letters appear in the same row, each letter is replaced by the one to
+its immediate right. If they are in the same column, each letter is replaced by
+the one below it. If the letters form a rectangle, they are replaced by the
+letters at the opposite corners of the rectangle. Decryption follows the reverse
+process.
+
+
+public class PlayfairCipher {
+
+    static char[][] matrix = {
+        {'M','O','N','A','R'},
+        {'C','H','Y','B','D'},
+        {'E','F','G','I','K'},
+        {'L','P','Q','S','T'},
+        {'U','V','W','X','Z'}
+    };
+
+    static String encrypt(String text) {
+        text = text.toUpperCase().replace("J", "I");
+        String result = "";
+
+        for (int i = 0; i < text.length(); i += 2) {
+            char a = text.charAt(i);
+            char b = text.charAt(i + 1);
+
+            int r1 = 0, c1 = 0, r2 = 0, c2 = 0;
+
+            for (int r = 0; r < 5; r++)
+                for (int c = 0; c < 5; c++) {
+                    if (matrix[r][c] == a) { r1 = r; c1 = c; }
+                    if (matrix[r][c] == b) { r2 = r; c2 = c; }
+                }
+
+            if (r1 == r2) {
+                result += matrix[r1][(c1 + 1) % 5];
+                result += matrix[r2][(c2 + 1) % 5];
+            } else if (c1 == c2) {
+                result += matrix[(r1 + 1) % 5][c1];
+                result += matrix[(r2 + 1) % 5][c2];
+            } else {
+                result += matrix[r1][c2];
+                result += matrix[r2][c1];
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Encrypted Text: " + encrypt("HELLOX"));
+    }
+}
