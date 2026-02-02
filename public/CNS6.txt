@@ -1,0 +1,37 @@
+Theory  
+
+The Advanced Encryption Standard (AES) is a symmetric key block cipher
+widely used for securing sensitive data. It was adopted by NIST as a replacement
+for DES due to its higher security and efficiency. AES operates on a fixed block
+size of 128 bits and supports key sizes of 128, 192, and 256 bits. Based on the
+key length, AES performs 10, 12, or 14 rounds of encryption.  Each AES round
+consists of four main operations: SubBytes (byte substitution using S-box),
+ShiftRows (row-wise permutation), MixColumns (column-wise mixing using matrix
+multiplication), and AddRoundKey (XOR with round key). Unlike DES, AES is not
+based on a Feistel structure and is faster in both hardware and software
+implementations. Due to its strong resistance against cryptographic attacks, AES
+is extensively used in applications such as secure web communication, wireless
+security, cloud storage, and disk encryption.
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
+public class AESExample {
+
+    public static void main(String[] args) throws Exception {
+
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128);
+        SecretKey key = keyGen.generateKey();
+
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        String plaintext = "HELLOAES";
+        byte[] encryptedText = cipher.doFinal(plaintext.getBytes());
+
+        System.out.println("Plain Text: " + plaintext);
+        System.out.println("Encrypted Text: " + new String(encryptedText));
+    }
+}

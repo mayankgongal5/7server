@@ -1,0 +1,36 @@
+Theory  
+Cryptography and Network Security together form the backbone of secure
+communication in modern computer networks. With the rapid growth of the
+Internet, cloud computing, e-commerce, and online banking, protecting data from
+unauthorized access, modification, and misuse has become a critical requirement.
+Cryptography provides the mathematical techniques for securing information,
+while Network Security focuses on protecting data as it travels across networks.
+
+Cryptography is the science and art of transforming information into an
+unreadable form to prevent unauthorized access. The original readable message is
+called plaintext, and the transformed unreadable message is known as ciphertext.
+The process of converting plaintext into ciphertext is called encryption, while
+converting ciphertext back into plaintext is known as decryption. Cryptography
+ensures four major security goals: confidentiality, integrity, authentication,
+and non-repudiation. It uses algorithms and keys to secure data, where the
+strength of security depends on the secrecy of the key rather than the algorithm
+itself. Cryptographic techniques are broadly classified into symmetric key
+cryptography (same key for encryption and decryption), asymmetric key
+cryptography (public and private keys), and hash functions (one-way functions
+for data integrity).   
+
+Network Security refers to the set of policies,
+technologies, and practices designed to protect networks and data from cyber
+threats. It safeguards data during transmission and prevents attacks such as
+eavesdropping, spoofing, denial of service, and man-in-the-middle attacks.
+Network security uses both hardware and software mechanisms like firewalls,
+intrusion detection systems (IDS), intrusion prevention systems (IPS), virtual
+private networks (VPNs), and secure communication protocols such as SSL/TLS and
+IPsec. While cryptography secures the data itself, network security ensures that
+the communication channels and network infrastructure are protected.  
+
+In practice, cryptography and network security work together. For example, when a
+user accesses a secure website, cryptographic algorithms encrypt the data, while
+network security mechanisms ensure safe transmission across the Internet. Thus,
+Cryptography & Network Security collectively provide a comprehensive framework
+for secure digital communicatio

@@ -1,0 +1,37 @@
+Theory   
+The Data Encryption Standard (DES) is a symmetric key block cipher
+developed by IBM and adopted by NIST. DES encrypts data in 64-bit blocks using a
+56-bit secret key. It follows a Feistel network structure consisting of 16
+rounds of processing. In each round, the plaintext block is divided into two
+halves, and a combination of substitution, permutation, and XOR operations is
+applied using round keys derived from the main key.  DES provides
+confidentiality by transforming plaintext into ciphertext using complex
+mathematical operations. However, due to its short key length, DES is vulnerable
+to brute-force attacks and is now considered insecure for modern applications.
+It has been largely replaced by stronger algorithms such as AES. Despite this,
+DES is still studied to understand the fundamentals of block cipher design and
+symmetric encryption techniques.
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
+public class DESExample {
+
+    public static void main(String[] args) throws Exception {
+
+        KeyGenerator keyGen = KeyGenerator.getInstance("DES");
+        SecretKey key = keyGen.generateKey();
+
+        Cipher cipher = Cipher.getInstance("DES");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        String plaintext = "HELLODES";
+        byte[] encrypted = cipher.doFinal(plaintext.getBytes());
+
+        System.out.println("Plain Text: " + plaintext);
+        System.out.println("Encrypted Text: " + new String(encrypted));
+    }
+}
+
+

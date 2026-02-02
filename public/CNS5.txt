@@ -1,0 +1,39 @@
+Theory  
+The Blowfish algorithm is a symmetric key block cipher designed by Bruce
+Schneier. It encrypts data in 64-bit blocks and supports a variable key length
+ranging from 32 bits to 448 bits, making it flexible and secure. Blowfish is
+based on a Feistel network consisting of 16 rounds, where each round performs
+substitution and permutation operations using key-dependent S-boxes.  Blowfish
+is known for its high speed and strong security, especially in software
+implementations. The key expansion phase generates several subkeys, which are
+used during encryption and decryption. Due to its efficiency and absence of
+patents, Blowfish has been widely used in applications such as password
+protection and file encryption. However, because of its 64-bit block size, it is
+gradually being replaced by modern algorithms like AES for large-scale data
+encryption. Despite this, Blowfish remains important for understanding symmetric
+cryptographic design principles.
+
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
+public class BlowfishExample {
+
+    public static void main(String[] args) throws Exception {
+
+        KeyGenerator keyGen = KeyGenerator.getInstance("Blowfish");
+        keyGen.init(128);
+        SecretKey key = keyGen.generateKey();
+
+        Cipher cipher = Cipher.getInstance("Blowfish");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+
+        String plaintext = "HELLOBLOWFISH";
+        byte[] encryptedText = cipher.doFinal(plaintext.getBytes());
+
+        System.out.println("Plain Text: " + plaintext);
+        System.out.println("Encrypted Text: " + new String(encryptedText));
+    }
+}
+

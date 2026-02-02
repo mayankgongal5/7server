@@ -1,0 +1,60 @@
+Theory   
+
+The Diffie–Hellman Key Exchange is an asymmetric cryptographic
+technique used to securely share a secret key over an insecure communication
+channel. Unlike encryption algorithms, Diffie–Hellman does not encrypt messages
+directly; instead, it allows two communicating parties to agree upon a common
+secret key that can later be used for symmetric encryption. The algorithm is
+based on modular arithmetic and prime numbers.  In this technique, both parties
+publicly agree on a large prime number (p) and a primitive root (g) of that
+prime. Each party selects a private key and computes a public key using modular
+exponentiation. The public keys are exchanged over the network, and each party
+then computes the shared secret using its own private key and the other party’s
+public key. Since the private keys are never transmitted, the shared secret
+remains secure even if the communication channel is compromised.
+
+public class DiffieHellmanPrime {
+
+    // Method to calculate (base^power) % mod
+    static long powerMod(long base, long power, long mod) {
+        long result = 1;
+        base = base % mod;
+
+        while (power > 0) {
+            if (power % 2 == 1)
+                result = (result * base) % mod;
+
+            power = power / 2;
+            base = (base * base) % mod;
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+
+        long p = 22;
+
+        long g = 18;
+
+        long a = 15;
+
+        long b = 14;
+
+        // Public keys
+        long A = powerMod(g, a, p);
+        long B = powerMod(g, b, p);
+
+        // Shared secret keys
+        long secretAlice = powerMod(B, a, p);
+        long secretBob = powerMod(A, b, p);
+
+        System.out.println("\nPublic key of Alice: " + A);
+        System.out.println("Public key of Bob: " + B);
+
+        System.out.println("\nSecret key computed by Alice: " + secretAlice);
+        System.out.println("Secret key computed by Bob: " + secretBob);
+
+      
+    }
+}
+
