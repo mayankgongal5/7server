@@ -14,42 +14,37 @@ considered authentic and unaltered. Digital signatures are widely used in secure
 emails, software distribution, online transactions, and legal documents.
 
 import java.security.*;
-import java.util.Scanner;
+
 
 public class DigitalSignatureExample {
 
-    public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 
-        Scanner sc = new Scanner(System.in);
+		// Generate RSA key pair
+		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+		keyGen.initialize(1024);
+		KeyPair pair = keyGen.generateKeyPair();
 
-        // Generate RSA key pair
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(1024);
-        KeyPair pair = keyGen.generateKeyPair();
+		PrivateKey privateKey = pair.getPrivate();
+		PublicKey publicKey = pair.getPublic();
 
-        PrivateKey privateKey = pair.getPrivate();
-        PublicKey publicKey = pair.getPublic();
+		String message = "Save me";
 
-        System.out.print("Enter message: ");
-        String message = sc.nextLine();
+		// Create Signature object
+		Signature signature = Signature.getInstance("SHA256withRSA");
 
-        // Create Signature object
-        Signature signature = Signature.getInstance("SHA256withRSA");
+		// Signing
+		signature.initSign(privateKey);
+		signature.update(message.getBytes());
+		byte[] digitalSignature = signature.sign();
 
-        // Signing
-        signature.initSign(privateKey);
-        signature.update(message.getBytes());
-        byte[] digitalSignature = signature.sign();
+		System.out.println("Digital Signature Generated");
 
-        System.out.println("Digital Signature Generated");
+		// Verification
+		signature.initVerify(publicKey);
+		signature.update(message.getBytes());
+		boolean isVerified = signature.verify(digitalSignature);
 
-        // Verification
-        signature.initVerify(publicKey);
-        signature.update(message.getBytes());
-        boolean isVerified = signature.verify(digitalSignature);
-
-        System.out.println("Signature Verified: " + isVerified);
-
-        sc.close();
-    }
+		System.out.println("Signature Verified: " + isVerified);
+	}
 }
